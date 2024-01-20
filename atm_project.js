@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import inquirer from "inquirer";
 import chalk from "chalk";
 import { createSpinner } from "nanospinner";
@@ -24,12 +25,12 @@ async function login() {
             message: chalk.rgb(214, 139, 150)("Enter Your Pin"),
         }]);
     if (userID === id && userPin === pin) {
-        const spinner = createSpinner('Authenticating....').start();
+        const spinner = createSpinner(chalk.magenta('    Authenticating \n<<<<....Please wait.....>>>>')).start();
         await time();
         spinner.success({ text: chalk.greenBright("Authentication Successfully... ") });
     }
     else {
-        const spinner = createSpinner('Authentication').start();
+        const spinner = createSpinner(chalk.magenta('    Authenticating \n<<<<....Please wait.....>>>>')).start();
         await time();
         spinner.error({ text: (chalk.redBright("Authentication Failed...")) });
         await login();
@@ -55,14 +56,14 @@ async function fastChash() {
             choices: [1000, 2000, 3000, 5000, 10000, 20000],
             message: chalk.rgb(214, 139, 150)("Select Your Amount")
         }]);
-    let spinner = createSpinner('Withdrawing').start();
+    let spinner = createSpinner(chalk.magentaBright('    Withdrawing \n<<<<....Please wait.....>>>>')).start();
     await time();
     if (fastchash <= totalAmount) {
         totalAmount = totalAmount - fastchash;
-        spinner.success({ text: chalk.greenBright("Withdraw successfully") });
+        spinner.success({ text: chalk.greenBright(`Rs.${fastchash} Withdraw successfully`) });
     }
     else {
-        spinner.error({ text: chalk.redBright("withdraw failed") });
+        spinner.error({ text: chalk.redBright("    Insufficient Amount \n <<<<.....SORRY.....>>>>") });
     }
     return fastchash;
 }
@@ -73,14 +74,14 @@ async function userAmount() {
             type: "number",
             message: chalk.rgb(214, 139, 150)("Enter Your Amount")
         }]);
-    let spinner = createSpinner('Withdrawing').start();
+    let spinner = createSpinner(chalk.magentaBright('    Withdrawing \n<<<<....Please wait.....>>>>')).start();
     await time();
     if (amount <= totalAmount) {
         totalAmount = totalAmount - amount;
-        spinner.success({ text: chalk.greenBright("Withdraw successfully") });
+        spinner.success({ text: chalk.greenBright(`Rs.${amount} Withdraw successfully`) });
     }
     else {
-        spinner.error({ text: chalk.redBright("withdraw failed") });
+        spinner.error({ text: chalk.redBright("    Insufficient Amount \n <<<<.....SORRY.....>>>>") });
     }
     return amount;
 }
@@ -92,9 +93,9 @@ async function depositAmount() {
             message: chalk.rgb(214, 139, 150)("Enter Your Amount"),
         }]);
     totalAmount += deposit;
-    let spinner = createSpinner('Depositing').start();
+    let spinner = createSpinner(chalk.magentaBright('     Depositing\n<<<<....Please wait.....>>>>')).start();
     await time();
-    spinner.success({ text: chalk.greenBright(`Your Peyment successfully Deposit ${deposit}`) });
+    spinner.success({ text: chalk.greenBright(`Rs.${deposit} successfully Deposited`) });
     return deposit;
 }
 async function startAgain() {
